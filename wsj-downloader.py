@@ -52,7 +52,11 @@ for date in dateRange:
     merger = PdfFileMerger()
 
     for file in filePaths:
-        merger.append(file)
+        if os.path.getsize(file) < 2500*1024:
+            merger.append(file)
+        else:
+            print('Page skipped from merge. ' + file + ' is too large')
+            pass        
     finalName = 'wsj-' + date    
     merger.write(fileOutPath + finalName + '.pdf')
     print('Merged ' + date)
